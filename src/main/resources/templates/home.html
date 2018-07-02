@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Doctor Pocket</title>
+
+		<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/skel.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/skel-layers.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/init.js}"></script>
+
+		<link rel="stylesheet" th:href="@{/css/skel.css}" />
+		<link rel="stylesheet" th:href="@{/css/style.css}" />
+		<link rel="stylesheet" th:href="@{/css/style-xlarge.css}" />
+
+	</head>
+	<body id="top">
+		<!-- Header -->
+			<header id="header" class="skel-layers-fixed">
+				<div style="overflow: hidden;">
+					<div style="float:left;"><h1><a href="#">Doctor Pocket</a></h1></div>
+					<div style="margin-left:210px; margin-top:3px; float:left; font-size: 12px;">Doctor edition</div>
+				</div>
+				<nav id="nav">
+					<ul>
+						<li><a href="#login" class="button special">Log in</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Banner -->
+			<section id="banner">
+				<div class="inner">
+					<div style="display: inline-block; background-color:#2a72c0; opacity:0.9;">
+					  <h2>This is Pocket Doctor</h2>
+					</div></br><br>
+					<p>A web app for doctors.
+					<br>Manage Patients / Data minding / Alert-Messaging</p>
+					<ul class="actions">
+						<li><a href="#login" class="button big special">Log in</a></li>
+						<li><a href="#elements" class="button big alt">Learn More</a></li>
+					</ul>
+				</div>
+			</section>
+
+		<!-- Log in -->
+			<section id="login" class="wrapper style1">
+				<header class="major">
+					<h2>Log in</h2>
+					<p>Login here using your username and password</p>
+				</header>
+				<div class="container" align="center">
+					<div class="row" style="display: table-cell;
+											  vertical-align: middle;
+											  text-align: center;">
+						<div class="login-page" style="display: inline-block;">
+						  <div class="form">
+						    <form th:action="@{/login}" method="GET" class="login-form" th:object="${doctor}">
+								<div class="form-group">
+									<input type="text"  name="username" placeholder="username"/>
+									<input type="password"  name="password" placeholder="password"/>
+									<div style="color:red; font-size:11px;" th:utext="${error}"> </div>
+								</div>
+								<button th:type="submit">login</button>
+							</form>
+						  </div>
+						</div>
+					</div>
+				</div>
+			</section>
+					
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="copyright">
+						<li>&copy; Untitled. All rights reserved.</li>
+						<li>Design: unipi.students</li>
+					</ul>
+				</div>
+			</footer>
+
+	</body>
+</html>
