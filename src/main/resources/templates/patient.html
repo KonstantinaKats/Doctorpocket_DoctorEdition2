@@ -253,7 +253,9 @@
     var patientId = [[${patientInfo.id}]];
     var patientName = [[${patientInfo.name}]];
     var patientRate = [[${patientInfo.rate}]];
-    document.getElementById("rating").innerHTML = ""+patientRate+"";
+    if (patientRate != null){
+        document.getElementById("rating").innerHTML = ""+patientRate+"";
+    }
     if (patientRate === "Good"){
         document.getElementById("star-3").checked = true;
     } else if (patientRate === "Neutral"){
