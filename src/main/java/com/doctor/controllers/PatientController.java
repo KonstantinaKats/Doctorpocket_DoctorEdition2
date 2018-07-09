@@ -31,6 +31,15 @@ public class PatientController {
 		return "patients-list";
 	}
 
+	@RequestMapping("/edit-patient-rate/{id}/{name}/{rate}")
+	public String editPatientRate(@PathVariable("id") String id, @PathVariable("name") String name, @PathVariable("rate") String rate, Model model) {
+		Patient patient = patientRepository.findByIdAndName(id,name);
+		patient.setRate(rate);
+		patientRepository.save(patient);
+		model.addAttribute("patientInfo", patient);
+		return "patient";
+	}
+
 	@RequestMapping("/patient/{id}/{name}")
 	public String patientPage(@PathVariable("id") String id, @PathVariable("name") String name, Model model) {
 		Patient patient = patientRepository.findByIdAndName(id, name);
@@ -80,19 +89,6 @@ public class PatientController {
 				}
 			}
 		}
-	}
-
-	@RequestMapping(value = "/addCar", method = RequestMethod.POST)
-	public String addCar(@ModelAttribute Patient car) {
-		patientRepository.save(car);
-		return "redirect:home2";
-	}
-	
-	@RequestMapping(value = "/search")
-	public String search(Model model, @RequestParam String search) {
-		model.addAttribute("carList", patientSearchRepository.searchPatients(search));
-		model.addAttribute("search", search);
-		return "home2";
 	}
 	
 }

@@ -21,9 +21,7 @@ public class Patient {
 
 	private String specifiedDisease;
 
-	private String lastLocated;
-
-	private String timeLastLocated;
+	private String rate;
 
 	public String getId() {
 		return id;
@@ -89,19 +87,11 @@ public class Patient {
 		this.specifiedDisease = specifiedDisease;
 	}
 
-	public String getLastLocated() {
-		return lastLocated;
+	public String getRate() {
+		return rate;
 	}
 
-	public void setLastLocated(String lastLocated) {
-		this.lastLocated = lastLocated;
-	}
-
-	public String getTimeLastLocated() {
-		return timeLastLocated;
-	}
-
-	public void setTimeLastLocated(String timeLastLocated) {
-		this.timeLastLocated = timeLastLocated;
+	public void setRate(String rate) {
+		this.rate = rate;
 	}
 }

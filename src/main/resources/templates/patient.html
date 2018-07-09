@@ -11,18 +11,82 @@
     <link rel="stylesheet" th:href="@{/css/skel.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/css/style-xlarge.css}"/>
-
+    <link rel="stylesheet" th:href="@{/css/toggles.css}">
+    <link rel="stylesheet" th:href="@{/css/toggles-light.css}">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/skel.min.js}"></script>
     <script th:src="@{/js/skel-layers.min.js}"></script>
     <script th:src="@{/js/init.js}"></script>
+    <script th:src="@{/js/toggles.js}" type="text/javascript"></script>
+    <!-- MINIFIED JS - recommended for production -->
+    <script th:src="@{/js/toggles.min.js}" type="text/javascript"></script>
     <!--<script type="text/javascript" th:src="@{/js/plugins/jquery-3.3.1.min.js}"></script>-->
 
 
-    <script type="text/javascript" th:src="@{/js/plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.min.js}"></script>
+    <script type="text/javascript"
+            th:src="@{/js/plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript"
+            th:src="@{/js/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.min.js}"></script>
+    <style>
+        .wrapper1 {
+            overflow: hidden;
+        }
 
+        .first {
+            float: left;
+        }
+
+        .second {
+            float: right;
+        }
+
+        div.stars {
+            width: 270px;
+            display: inline-block;
+        }
+
+        input.star {
+            display: none;
+        }
+
+        label.star {
+            float: right;
+            padding: 10px;
+            font-size: 36px;
+            transition: all .2s;
+        }
+
+        input.star:checked ~ label.star:before {
+            content: '\f005';
+            color: #FD4;
+            transition: all .25s;
+        }
+
+        input.star-3:checked ~ label.star:before {
+            color: #3984c6;
+            text-shadow: 0 0 20px #952;
+        }
+
+        input.star-1:checked ~ label.star:before {
+            color: #9cc2e2;
+        }
+
+        input.star-2:checked ~ label.star:before {
+            color: #629dd1;
+        }
+
+        label.star:hover {
+            transform: rotate(-15deg) scale(1.3);
+        }
+
+        label.star:before {
+            content: '\f006';
+            font-family: FontAwesome;
+        }
+
+    </style>
 
 </head>
 <body id="top">
@@ -47,8 +111,9 @@
     </header>
     <div class="container">
         <div class="row">
-            <div class="4u" style="width: 40%;">
+            <div class="4u" style="width: 40%; height:300px;">
                 <section class="special box">
+                    <h4>Patient Details</h4>
                     <table>
                         <tr>
                             <td>Personal number</td>
@@ -73,11 +138,99 @@
                     </table>
                 </section>
             </div>
-            <div class="4u" style="width: 40%;">
+            <div class="4u" style="width: 60%; height:300px;">
                 <section class="special box">
-                    <!--valto edo -->
-                    <iframe src="http://localhost:9090/#/notebook/2DK3N8ERB/paragraph/20180626-123346_1812542166?asIframe"
-                            height="550px" width="100%"></iframe>
+                    <div class="wrapper1">
+                        <div class="first"><p>Rate your patient's progress</p></div>
+                        <div class="stars second">
+                            <form>
+                                <input class="star star-3" onclick="editRate('Good')" id="star-3" type="radio"
+                                       name="star"/>
+                                <label class="star star-3" for="star-3"></label>
+                                <input class="star star-2" onclick="editRate('Neutral')" id="star-2" type="radio"
+                                       name="star"/>
+                                <label class="star star-2" for="star-2"></label>
+                                <input class="star star-1" onclick="editRate('Bad')" id="star-1" type="radio"
+                                       name="star"/>
+                                <label class="star star-1" for="star-1"></label>
+                                <span id="rating"></span>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 250px;">
+            <div class="4u" style="width: 100%;">
+                <section class="special box">
+                    <div class="wrapper1">
+                        <h4 class="first">Today's Tracking</h4>
+                        <div class="toggle toggle-light second"></div>
+                    </div>
+                    <div class="wrapper1">
+                        <iframe id="diagram" style="margin-left: -10px;" class="first"
+                                src="http://localhost:9090/#/notebook/2DHGHDPRY/paragraph/20180704-104836_1288212073?asIframe"
+                                height="300px" width="70%"></iframe>
+                        <iframe id="pie" class="second"
+                                src="http://localhost:9090/#/notebook/2DKERRMR4/paragraph/20180704-130540_495966410?asIframe"
+                                height="330px" width="30%"></iframe>
+                        <p style="margin-left: 1004px; margin-top: 273px;
+                                    font-size: 12px; position: absolute;">(Time in minutes)</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 50px;">
+            <div class="4u" style="width: 100%;">
+                <section class="special box">
+                    <h4 style="text-align: left;">General Indoor Tracking</h4>
+                    <div class="wrapper1">
+                        <iframe id="diagram" style="margin-left: -10px;" class="first"
+                                src="http://localhost:9090/#/notebook/2DGYH27DR/paragraph/20180705-114911_182593938?asIframe"
+                                height="330px" width="70%"></iframe>
+                        <iframe id="pie" class="second"
+                                src="http://localhost:9090/#/notebook/2DGYH27DR/paragraph/20180705-142204_580675955?asIframe"
+                                height="330px" width="30%"></iframe>
+                        <p style="margin-left: 1004px; margin-top: 273px;
+                                    font-size: 12px; position: absolute;">(Time in minutes)</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 50px;">
+            <div class="4u" style="width: 100%;">
+                <section class="special box">
+                    <h4 style="text-align: left;">General Outdoor Tracking</h4>
+                    <div class="wrapper1">
+                        <iframe id="diagram" style="margin-left: -10px;" class="first"
+                                src="http://localhost:9090/#/notebook/2DK9XG4B3/paragraph/20180707-150729_1248191655?asIframe"
+                                height="330px" width="70%"></iframe>
+                        <iframe id="pie" class="second"
+                                src="http://localhost:9090/#/notebook/2DK9XG4B3/paragraph/20180707-150840_1213970004?asIframe"
+                                height="330px" width="30%"></iframe>
+                        <p style="margin-left: 1004px; margin-top: 273px;
+                                    font-size: 12px; position: absolute;">(Time in minutes)</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 50px;">
+            <div class="4u" style="width: 100%;">
+                <section class="special box">
+                    <h4 style="text-align: left;">General Outdoor Tracking for Patients With *********</h4>
+                    <div class="wrapper1">
+                        <iframe style="margin-left: -10px;" class="first"
+                                src="http://localhost:9090/#/notebook/2DHW4K9QT/paragraph/20180708-212151_359838561?asIframe"
+                                height="360px" width="33%"></iframe>
+                        <iframe style="margin-left: -10px;" class="first"
+                                src="http://localhost:9090/#/notebook/2DHW4K9QT/paragraph/20180708-212611_1892828751?asIframe"
+                                height="360px" width="33%"></iframe>
+                        <iframe class="second"
+                                src="http://localhost:9090/#/notebook/2DHW4K9QT/paragraph/20180708-212938_604764767?asIframe"
+                                height="360px" width="33%"></iframe>
+                        <p style="margin-left: 1004px; margin-top: 293px;
+                                    font-size: 12px; position: absolute;">(Time in minutes)</p>
+                    </div>
                 </section>
             </div>
         </div>
@@ -95,4 +248,58 @@
 </footer>
 
 </body>
+<input id="toggle-one" checked type="checkbox">
+<script th:inline="javascript">
+    var patientId = [[${patientInfo.id}]];
+    var patientName = [[${patientInfo.name}]];
+    var patientRate = [[${patientInfo.rate}]];
+    document.getElementById("rating").innerHTML = ""+patientRate+"";
+    if (patientRate === "Good"){
+        document.getElementById("star-3").checked = true;
+    } else if (patientRate === "Neutral"){
+        document.getElementById("star-2").checked = true;
+    } else if (patientRate === "Bad"){
+        document.getElementById("star-1").checked = true;
+    }
+    function editRate(rate) {
+        var path = "/edit-patient-rate/" + patientId + "/" + patientName + "/" + rate + "";
+        document.getElementById("rating").innerHTML = ""+rate+"";
+
+        $.ajax({
+            method: "POST",
+            url: path,
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json"
+        });
+    }
+
+    $('.toggle').toggles({
+        drag: true, // allow dragging the toggle between positions
+        click: true, // allow clicking on the toggle
+        text: {
+            on: 'Indoor', // text for the ON position
+            off: 'Outdoor' // and off
+        },
+        on: true, // is the toggle ON on init
+        animate: 250, // animation time (ms)
+        easing: 'swing', // animation transition easing function
+        checkbox: null, // the checkbox to toggle (for use in forms)
+        clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
+        width: 80, // width used if not set in css
+        height: 20, // height if not set in css
+        type: 'select' // if this is set to 'select' then the select style toggle will be used
+    });
+    $('.toggle').on('toggle', function (e, active) {
+        if (active) {
+            console.log('Toggle is now ON - Indoor!');
+            document.getElementById("diagram").src = "http://localhost:9090/#/notebook/2DHGHDPRY/paragraph/20180704-104836_1288212073?asIframe";
+            document.getElementById("pie").src = "http://localhost:9090/#/notebook/2DKERRMR4/paragraph/20180704-130540_495966410?asIframe";
+
+        } else {
+            console.log('Toggle is now OFF - Outdoor!');
+            document.getElementById("diagram").src = "http://localhost:9090/#/notebook/2DHUGV7CH/paragraph/20180704-152424_1216044861?asIframe";
+            document.getElementById("pie").src = "http://localhost:9090/#/notebook/2DJBUEQ6C/paragraph/20180704-151334_109236319?asIframe";
+        }
+    });
+</script>
 </html>
