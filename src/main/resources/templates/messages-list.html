@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doctor Pocket - Patient List</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+
+    <link rel="stylesheet" th:href="@{/js/plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css}">
+
+    <link rel="stylesheet" th:href="@{/css/skel.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style-xlarge.css}"/>
+
+
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/skel.min.js}"></script>
+    <script th:src="@{/js/skel-layers.min.js}"></script>
+    <script th:src="@{/js/init.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/js/plugins/jquery-3.3.1.min.js}"></script>-->
+
+    <script type="text/javascript" th:src="@{/js/plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.min.js}"></script>
+
+
+    <style>
+        .centered{
+            margin: auto;
+            width: 1100px;
+            height: 500px;
+        }
+        .table-hover > tbody > tr:hover {
+            background-color: #629DD1 !important;
+        }
+
+        .tree-table {
+            background-color: #fff;
+            width: 500px;
+        }
+
+        .tree-table th,
+        .tree-table td {
+
+            border-top: 1px solid #ebebeb;
+        }
+
+        .tree-table th {
+
+        }
+    </style>
+
+</head>
+<body id="top">
+<!-- Header -->
+<header id="header" class="skel-layers-fixed">
+    <div style="overflow: hidden;">
+        <div style="float:left;"><h1><a th:href="@{/menu}">Doctor Pocket</a></h1></div>
+        <div style="margin-left:210px; margin-top:3px; float:left; font-size: 12px;">Doctor edition</div>
+    </div>
+    <nav id="nav">
+        <ul>
+            <li><a th:href="@{/home}" class="button special">Log out</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<!-- One -->
+<section id="one" class="wrapper style1">
+    <header class="major">
+        <h2>My Messages List</h2>
+    </header>
+    <div>
+        <div class="centered">
+            <table id="patients-list-data" border="0" class="table-hover tree-table" cellspacing="0" cellpadding="2" width="100%">
+                <thead>
+                <tr>
+                    <th>Receiver</th>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="message : ${messagesList}">
+                    <td th:utext="${message.patient_surname} + ' ' + ${message.patient_name}"></td>
+                    <td th:text="${message.date}"></td>
+                    <td th:text="${message.title}"></td>
+                    <td th:utext="${message.body}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="container">
+        <ul class="copyright">
+            <li>&copy; Untitled. All rights reserved.</li>
+            <li>Design: unipi.students</li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        var table = $('#patients-list-data').DataTable({
+            paging: true,
+            pageLength: 10,
+            searching:true,
+            lengthChange: false,
+            "columns": [
+                null,
+                { "width": "30%" },
+                null,
+                { "width": "100%" }
+            ]
+        });
+
+        $('#patients-list-data tbody').on( 'click', 'tr', function () {
+            if ( $(this).hasClass('selected') ) {
+                $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        } );
+    });
+</script>
+</html>
