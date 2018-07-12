@@ -21,4 +21,9 @@ public class MessagesController {
         model.addAttribute("messagesList", notificationsRepository.findAll());
         return "messages-list";
     }
+
+    @RequestMapping("/messagesToAll")
+    public String messagesToAll(Model model) {
+        return "messageToAll";
+    }
 }
